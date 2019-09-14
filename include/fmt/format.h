@@ -2088,7 +2088,7 @@ template <template <typename> class Handler, typename T, typename FormatArg,
 FMT_CONSTEXPR void set_dynamic_spec(T& value, FormatArg arg, ErrorHandler eh) {
   unsigned long long big_value =
       visit_format_arg(Handler<ErrorHandler>(eh), arg);
-  if (big_value > max_value<int>()) eh.on_error("number is too big");
+  if (big_value > static_cast<decltype(big_value)>(max_value<int>())) eh.on_error("number is too big");
   value = static_cast<T>(big_value);
 }
 
